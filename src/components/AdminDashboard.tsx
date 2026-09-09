@@ -82,7 +82,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   // Payments & Transactions State
   const [paymentSearchTerm, setPaymentSearchTerm] = useState('');
   const [paymentStatusFilter, setPaymentStatusFilter] = useState<'todos' | 'completado' | 'procesando' | 'reembolsado'>('todos');
-  const [paymentMethodFilter, setPaymentMethodFilter] = useState<'todos' | 'tarjeta' | 'paypal' | 'paddle' | 'stripe' | 'applepay' | 'banca'>('todos');
+  const [paymentMethodFilter, setPaymentMethodFilter] = useState<'todos' | 'tarjeta' | 'paypal' | 'stripe' | 'applepay' | 'banca'>('todos');
   const [selectedReceipt, setSelectedReceipt] = useState<TransactionRecord | null>(null);
   const [transactionsList, setTransactionsList] = useState<TransactionRecord[]>(() => getStoredTransactions());
 
@@ -1277,7 +1277,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     <CreditCard className="w-5 h-5" />
                   </div>
                 </div>
-                <p className="text-2xl sm:text-3xl font-black text-white mt-3">PayPal • Paddle • Stripe</p>
+                <p className="text-2xl sm:text-3xl font-black text-white mt-3">PayPal • Stripe</p>
                 <p className="text-xs text-slate-300 mt-1.5 font-semibold">Integraciones listas con endpoints y credenciales</p>
               </div>
             </div>
@@ -1287,11 +1287,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <div className="flex items-center justify-between">
                 <span className="text-sm font-black uppercase tracking-wider text-slate-300">Pasarelas de Pago Oficiales (API Configurables)</span>
                 <span className="text-xs text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 font-bold">
-                  ● 3 Pasarelas Conectadas
+                  ● 2 Pasarelas Conectadas
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                 <div className="bg-slate-950 p-3.5 rounded-xl border border-indigo-500/30 flex flex-col space-y-1.5">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
@@ -1318,20 +1318,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   </div>
                   <p className="text-[11px] text-slate-400">Pago con saldo PayPal o tarjeta sin cuenta a $5.00 USD</p>
                   <code className="text-[10px] text-blue-300 font-mono bg-slate-900 px-1.5 py-0.5 rounded w-fit">API: PAYPAL_CONFIG.clientId</code>
-                </div>
-
-                <div className="bg-slate-950 p-3.5 rounded-xl border border-emerald-500/30 flex flex-col space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <ShieldCheck className="w-4.5 h-4.5 text-emerald-400" />
-                      <span className="font-bold text-white">Paddle Billing</span>
-                    </div>
-                    <span className="text-[10px] bg-emerald-500/10 text-emerald-400 font-black px-2 py-0.5 rounded border border-emerald-500/20">
-                      Activo
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-400">Merchant of Record con gestión global de impuestos a $5.00 USD</p>
-                  <code className="text-[10px] text-emerald-300 font-mono bg-slate-900 px-1.5 py-0.5 rounded w-fit">API: PADDLE_CONFIG.vendorId</code>
                 </div>
               </div>
             </div>
@@ -1377,7 +1363,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     >
                       <option value="todos">Todas las Pasarelas</option>
                       <option value="paypal">PayPal</option>
-                      <option value="paddle">Paddle</option>
                       <option value="stripe">Stripe</option>
                       <option value="tarjeta">Tarjeta / Directo</option>
                       <option value="applepay">Apple Pay</option>
@@ -1429,12 +1414,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             <span className="inline-flex items-center space-x-1.5 bg-slate-950 px-3 py-1.5 rounded-lg border border-blue-500/40 font-bold text-xs text-blue-400">
                               <Globe className="w-4 h-4" />
                               <span>PayPal</span>
-                            </span>
-                          )}
-                          {txn.method === 'paddle' && (
-                            <span className="inline-flex items-center space-x-1.5 bg-slate-950 px-3 py-1.5 rounded-lg border border-emerald-500/40 font-bold text-xs text-emerald-400">
-                              <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                              <span>Paddle</span>
                             </span>
                           )}
                           {txn.method === 'tarjeta' && (

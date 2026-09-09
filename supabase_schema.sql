@@ -8,7 +8,7 @@
 -- 4. Progreso de lecciones completadas y código guardado
 -- 5. Evaluaciones finales, intentos y notas
 -- 6. Certificados emitidos y diplomas de graduación
--- 7. Historial de transacciones y pasarelas de pago (Stripe, PayPal, Paddle)
+-- 7. Historial de transacciones y pasarelas de pago (Stripe, PayPal)
 -- 8. Auditoría y actividad en el compilador
 -- ============================================================================
 
@@ -166,7 +166,7 @@ CREATE INDEX IF NOT EXISTS idx_certificates_code ON public.certificates(certific
 -- 9. TABLA: transactions (Historial de Pagos y Facturas)
 -- ----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.transactions (
-    id VARCHAR(80) PRIMARY KEY, -- Ej: 'TXN-90841' o 'PADDLE_TXN_...' o 'STRIPE_pi_...'
+    id VARCHAR(80) PRIMARY KEY, -- Ej: 'TXN-90841' o 'STRIPE_pi_...' o 'PAYID_...'
     user_id UUID REFERENCES public.users_profile(id) ON DELETE SET NULL,
     student_name VARCHAR(150) NOT NULL,
     student_email VARCHAR(255) NOT NULL,
@@ -174,7 +174,7 @@ CREATE TABLE IF NOT EXISTS public.transactions (
     course_id VARCHAR(50) REFERENCES public.courses(id) ON DELETE SET NULL,
     amount_usd NUMERIC(10, 2) NOT NULL DEFAULT 5.00,
     amount_formatted VARCHAR(50) NOT NULL DEFAULT '$5.00 USD',
-    gateway VARCHAR(30) NOT NULL CHECK (gateway IN ('paypal', 'paddle', 'stripe', 'tarjeta', 'applepay', 'banca')),
+    gateway VARCHAR(30) NOT NULL CHECK (gateway IN ('paypal', 'stripe', 'tarjeta', 'applepay', 'banca')),
     gateway_transaction_id VARCHAR(255),
     card_last4 VARCHAR(4),
     status VARCHAR(30) NOT NULL DEFAULT 'completado' CHECK (status IN ('completado', 'procesando', 'reembolsado', 'fallido')),

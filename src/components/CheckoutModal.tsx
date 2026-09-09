@@ -19,7 +19,6 @@ import {
   PaymentGatewayType, 
   processStripePayment, 
   processPayPalPayment, 
-  processPaddlePayment,
   PaymentPayload,
   PAYPAL_CONFIG,
   STRIPE_CONFIG
@@ -91,8 +90,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       let result;
       if (selectedGateway === 'stripe') {
         result = await processStripePayment(payload);
-      } else if (selectedGateway === 'paddle') {
-        result = await processPaddlePayment(payload);
       } else {
         result = await processPayPalPayment(payload);
       }
@@ -215,7 +212,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
               
-              {/* LEFT COLUMN: 3 PAYMENT GATEWAYS (PAYPAL, PADDLE, STRIPE) */}
+              {/* LEFT COLUMN: 2 PAYMENT GATEWAYS (PAYPAL, STRIPE) */}
               <div className="lg:col-span-7 p-6 sm:p-8 space-y-6 border-b lg:border-b-0 lg:border-r border-slate-800">
                 
                 {/* GATEWAYS SELECTION TABS */}
@@ -224,10 +221,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <label className="text-xs font-bold text-slate-300 uppercase tracking-wider">
                       Selecciona la Pasarela de Pago
                     </label>
-                    <span className="text-[10px] text-indigo-400 font-semibold">3 Métodos Oficiales</span>
+                    <span className="text-[10px] text-indigo-400 font-semibold">2 Métodos Oficiales</span>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2.5">
+                  <div className="grid grid-cols-2 gap-3">
                     {/* 1. PAYPAL BUTTON */}
                     <button
                       type="button"
@@ -245,24 +242,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       <span className="text-[10px] text-slate-400">Saldo & Cards</span>
                     </button>
 
-                    {/* 2. PADDLE BUTTON */}
-                    <button
-                      type="button"
-                      onClick={() => setSelectedGateway('paddle')}
-                      className={`p-3 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center space-y-1 ${
-                        selectedGateway === 'paddle'
-                          ? 'bg-emerald-600/15 border-emerald-500 ring-2 ring-emerald-500/40 text-white shadow-lg'
-                          : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
-                      }`}
-                    >
-                      <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-black text-sm">
-                        <Layers className="w-4 h-4" />
-                      </div>
-                      <span className="text-xs font-bold text-white">Paddle</span>
-                      <span className="text-[10px] text-slate-400">Billing Global</span>
-                    </button>
-
-                    {/* 3. STRIPE BUTTON */}
+                    {/* 2. STRIPE BUTTON */}
                     <button
                       type="button"
                       onClick={() => setSelectedGateway('stripe')}
@@ -366,49 +346,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         <span>• Pagar {selectedPlan.price} (Modo Prueba)</span>
                       </button>
                     )}
-
-                  </div>
-                )}
-
-                {/* GATEWAY 2: PADDLE VIEW */}
-                {selectedGateway === 'paddle' && (
-                  <div className="space-y-4 pt-1">
-                    <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-4 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-black text-emerald-400 flex items-center space-x-1.5">
-                          <Layers className="w-4 h-4" />
-                          <span>Paddle Billing (Merchant of Record)</span>
-                        </span>
-                        <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                          Soporte Global & Facturación
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-300 leading-relaxed">
-                        Checkout unificado con cálculo automático de impuestos locales, retenciones e IVA internacional adaptado a tu país de residencia.
-                      </p>
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-300">Correo para facturación electrónica</label>
-                      <input
-                        type="email"
-                        value={customerEmail}
-                        onChange={(e) => setCustomerEmail(e.target.value)}
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500"
-                        placeholder="tu@correo.com"
-                      />
-                    </div>
-
-                    {/* DEDICATED PADDLE BUTTON */}
-                    <button
-                      type="button"
-                      onClick={() => handleExecutePayment()}
-                      disabled={isProcessing}
-                      className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black text-sm sm:text-base transition-all cursor-pointer shadow-lg shadow-emerald-500/20 flex items-center justify-center space-x-2 disabled:opacity-50"
-                    >
-                      <ShieldCheck className="w-5 h-5 text-slate-950" />
-                      <span>Pagar con Paddle ({selectedPlan.price})</span>
-                    </button>
 
                   </div>
                 )}
@@ -542,7 +479,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       <span>Procesando con {selectedGateway}...</span>
                     ) : (
                       <>
-                        <span>Completar Pago con {selectedGateway === 'paypal' ? 'PayPal' : selectedGateway === 'paddle' ? 'Paddle' : 'Stripe'}</span>
+                        <span>Completar Pago con {selectedGateway === 'paypal' ? 'PayPal' : 'Stripe'}</span>
                         <Zap className="w-4 h-4 text-indigo-600 fill-indigo-600" />
                       </>
                     )}

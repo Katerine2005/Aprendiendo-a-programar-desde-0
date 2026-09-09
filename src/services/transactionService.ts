@@ -6,7 +6,7 @@ export interface TransactionRecord {
   studentEmail: string;
   planName: string;
   amount: string;
-  method: 'tarjeta' | 'paypal' | 'paddle' | 'stripe' | 'applepay' | 'banca';
+  method: 'tarjeta' | 'paypal' | 'stripe' | 'applepay' | 'banca';
   cardLast4?: string;
   date: string;
   status: 'completado' | 'procesando' | 'reembolsado';
@@ -47,7 +47,7 @@ export const recordNewPurchase = (params: {
   studentEmail: string;
   planName: string;
   amount: string;
-  method: 'tarjeta' | 'paypal' | 'paddle' | 'stripe' | 'applepay' | 'banca';
+  method: 'tarjeta' | 'paypal' | 'stripe' | 'applepay' | 'banca';
   courseId?: CourseId | null;
   cardLast4?: string;
 }): TransactionRecord => {

@@ -868,7 +868,7 @@ export const StudentProfileView: React.FC<StudentProfileViewProps> = ({
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                 {/* 1. PAYPAL */}
                 <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 hover:border-[#0070BA]/50 transition-all space-y-3">
                   <div className="flex items-center justify-between">
@@ -891,29 +891,7 @@ export const StudentProfileView: React.FC<StudentProfileViewProps> = ({
                   </div>
                 </div>
 
-                {/* 2. PADDLE */}
-                <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 hover:border-emerald-500/50 transition-all space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-black text-white flex items-center space-x-2">
-                      <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-black text-xs">
-                        <Zap className="w-3.5 h-3.5 fill-emerald-400" />
-                      </div>
-                      <span>Paddle</span>
-                    </span>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                      Listo para API
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    Merchant of Record (MoR) oficial. Gestión automatizada de suscripciones, cumplimiento de IVA/impuestos mundiales y checkout embebido.
-                  </p>
-                  <div className="pt-1 text-[11px] font-mono text-emerald-400/90 flex items-center space-x-1">
-                    <span>• API:</span>
-                    <code className="text-slate-300 bg-slate-900 px-1.5 py-0.5 rounded">PADDLE_CONFIG.clientToken</code>
-                  </div>
-                </div>
-
-                {/* 3. STRIPE */}
+                {/* 2. STRIPE */}
                 <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 hover:border-[#635BFF]/50 transition-all space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-black text-white flex items-center space-x-2">
@@ -955,7 +933,7 @@ export const StudentProfileView: React.FC<StudentProfileViewProps> = ({
 
                 {studentTransactions.length === 0 ? (
                   <div className="p-6 bg-slate-950 rounded-2xl border border-dashed border-slate-800 text-center text-xs text-slate-400">
-                    No hay transacciones registradas aún. Al adquirir un curso por $5.00 USD con PayPal, Paddle o Stripe, aparecerá aquí tu comprobante de pago inmediato.
+                    No hay transacciones registradas aún. Al adquirir un curso por $5.00 USD con PayPal o Stripe, aparecerá aquí tu comprobante de pago inmediato.
                   </div>
                 ) : (
                   <div className="overflow-x-auto">
