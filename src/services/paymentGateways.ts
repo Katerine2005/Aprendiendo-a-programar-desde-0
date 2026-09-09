@@ -71,8 +71,8 @@ export async function processStripePayment(payload: PaymentPayload): Promise<Pay
  * 2. CONFIGURACIÓN DE PAYPAL
  * ========================================================================= */
 export const PAYPAL_CONFIG = {
-  // Client ID de PayPal leído de .env (Sandbox o Live)
-  clientId: (import.meta as any).env?.VITE_PAYPAL_CLIENT_ID || '',
+  // Client ID de PayPal leído de .env (Sandbox o Live) o fallback por defecto
+  clientId: (import.meta as any).env?.VITE_PAYPAL_CLIENT_ID || 'ASTZzseVgr8i4QQJNr_7OC4idL4-Id0vcpif_7p2W0hhhy0ZZt44d8ItwJrLfueu9nO0qyO3pl2_0RHV',
   currency: (import.meta as any).env?.VITE_PAYPAL_CURRENCY || 'USD',
   // Endpoint de tu backend para capturar órdenes de PayPal (opcional)
   captureOrderUrl: '/api/paypal/capture-order',
