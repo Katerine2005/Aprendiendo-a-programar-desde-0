@@ -452,7 +452,20 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-300">Número de tarjeta</label>
+                      <div className="flex items-center justify-between">
+                        <label className="text-xs font-bold text-slate-300">Número de tarjeta</label>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCardNumber('4242 4242 4242 4242');
+                            setExpiryDate('12/28');
+                            setCvc('123');
+                          }}
+                          className="text-[11px] font-bold text-indigo-400 hover:text-indigo-300 bg-indigo-500/10 hover:bg-indigo-500/20 px-2.5 py-0.5 rounded-lg border border-indigo-500/20 transition-all cursor-pointer flex items-center space-x-1"
+                        >
+                          <span>⚡ Usar Tarjeta de Prueba (4242)</span>
+                        </button>
+                      </div>
                       <div className="relative">
                         <input
                           type="text"
