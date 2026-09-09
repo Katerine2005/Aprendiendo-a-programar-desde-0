@@ -367,20 +367,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       </button>
                     )}
 
-                    <div className="p-3 bg-slate-950 rounded-xl border border-slate-800/80 flex items-center space-x-2 text-[11px] text-slate-400">
-                      <Code2 className="w-4 h-4 text-sky-400 shrink-0" />
-                      <span>
-                        {PAYPAL_CONFIG.clientId && PAYPAL_CONFIG.clientId !== 'tu_paypal_client_id_aqui' ? (
-                          <span className="text-emerald-400 font-semibold">
-                            ✅ PayPal SDK activo en vivo ({PAYPAL_CONFIG.clientId.slice(0, 10)}...)
-                          </span>
-                        ) : (
-                          <span>
-                            Conector listo: Añade <code className="text-sky-300">VITE_PAYPAL_CLIENT_ID</code> en tu <code className="text-sky-300">.env</code> o Vercel para activar los botones en vivo.
-                          </span>
-                        )}
-                      </span>
-                    </div>
                   </div>
                 )}
 
@@ -424,12 +410,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       <span>Pagar con Paddle ({selectedPlan.price})</span>
                     </button>
 
-                    <div className="p-3 bg-slate-950 rounded-xl border border-slate-800/80 flex items-center space-x-2 text-[11px] text-slate-400">
-                      <Code2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                      <span>
-                        Conector preparado: Configura tu <strong>Vendor ID / Token de Paddle</strong> en <code className="text-emerald-300">src/services/paymentGateways.ts</code>.
-                      </span>
-                    </div>
                   </div>
                 )}
 
@@ -452,20 +432,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     </div>
 
                     <div className="space-y-1.5">
-                      <div className="flex items-center justify-between">
-                        <label className="text-xs font-bold text-slate-300">Número de tarjeta</label>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setCardNumber('4242 4242 4242 4242');
-                            setExpiryDate('12/28');
-                            setCvc('123');
-                          }}
-                          className="text-[11px] font-bold text-indigo-400 hover:text-indigo-300 bg-indigo-500/10 hover:bg-indigo-500/20 px-2.5 py-0.5 rounded-lg border border-indigo-500/20 transition-all cursor-pointer flex items-center space-x-1"
-                        >
-                          <span>⚡ Usar Tarjeta de Prueba (4242)</span>
-                        </button>
-                      </div>
+                      <label className="text-xs font-bold text-slate-300">Número de tarjeta</label>
                       <div className="relative">
                         <input
                           type="text"
@@ -517,20 +484,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       <span>Pagar con Stripe ({selectedPlan.price})</span>
                     </button>
 
-                    <div className="p-3 bg-slate-950 rounded-xl border border-slate-800/80 flex items-center space-x-2 text-[11px] text-slate-400">
-                      <Code2 className="w-4 h-4 text-[#635BFF] shrink-0" />
-                      <span>
-                        {STRIPE_CONFIG.publishableKey && STRIPE_CONFIG.publishableKey !== 'pk_test_tu_clave_publica_stripe_aqui' ? (
-                          <span className="text-emerald-400 font-semibold">
-                            ✅ Stripe Engine activo en vivo ({STRIPE_CONFIG.publishableKey.slice(0, 16)}...)
-                          </span>
-                        ) : (
-                          <span>
-                            Conector preparado: Configura tu <strong>Publishable Key de Stripe</strong> en <code className="text-indigo-300">src/services/paymentGateways.ts</code>.
-                          </span>
-                        )}
-                      </span>
-                    </div>
                   </form>
                 )}
 
