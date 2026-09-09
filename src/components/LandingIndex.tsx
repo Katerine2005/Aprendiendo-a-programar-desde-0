@@ -17,23 +17,23 @@ export const LandingIndex: React.FC<LandingIndexProps> = ({
       
       {/* LANDING INDEX TOP NAVBAR */}
       <nav className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           
           {/* Brand Logo */}
           <div className="flex items-center space-x-3 cursor-pointer">
-            <div className="p-2.5 bg-indigo-600 rounded-xl shadow-md">
-              <Terminal className="w-6 h-6 text-white" />
+            <div className="p-2 bg-indigo-600 rounded-xl shadow-md">
+              <Terminal className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-extrabold text-2xl tracking-tight text-white">
+                <span className="font-extrabold text-xl tracking-tight text-white">
                   CODEX
                 </span>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 uppercase tracking-widest">
                   Plataforma Edu
                 </span>
               </div>
-              <p className="text-xs text-slate-400">Aprende Programación Interactivamente</p>
+              <p className="text-[11px] text-slate-400">Aprende Programación Interactivamente</p>
             </div>
           </div>
 

@@ -135,37 +135,37 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl my-8 relative z-10"
+          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl my-auto relative z-10"
         >
         
         {/* Header decoration */}
-        <div className="bg-slate-900 border-b border-slate-800 p-6 sm:p-8 text-white relative">
+        <div className="bg-slate-900 border-b border-slate-800 p-5 sm:p-6 text-white relative shrink-0">
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
+            className="absolute top-4 right-4 p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
 
-          <div className="flex items-center space-x-2 text-indigo-400 font-extrabold text-sm uppercase tracking-wider mb-2">
-            <ShieldCheck className="w-5 h-5" />
+          <div className="flex items-center space-x-1.5 text-indigo-400 font-extrabold text-xs uppercase tracking-wider mb-1.5">
+            <ShieldCheck className="w-4 h-4" />
             <span>Acceso Seguro CODEX</span>
           </div>
 
-          <h2 className="text-3xl font-black text-white">
+          <h2 className="text-xl sm:text-2xl font-black text-white">
             {mode === 'login' ? 'Iniciar Sesión' : 'Crear Cuenta de Estudiante'}
           </h2>
-          <p className="text-sm text-slate-300 mt-1.5 font-medium">
+          <p className="text-xs text-slate-300 mt-1 font-medium">
             {mode === 'login' 
               ? 'Accede a tus cursos, evaluaciones y panel interactivo' 
               : 'Regístrate para aprender a programar de cero a experto'}
           </p>
 
           {/* Mode Tabs */}
-          <div className="grid grid-cols-2 gap-1.5 bg-slate-950 p-1.5 rounded-2xl mt-5 border border-slate-800">
+          <div className="grid grid-cols-2 gap-1.5 bg-slate-950 p-1 rounded-xl mt-4 border border-slate-800">
             <button
               onClick={() => { setMode('login'); resetMessages(); }}
-              className={`py-2.5 text-sm sm:text-base font-extrabold rounded-xl transition-all cursor-pointer ${
+              className={`py-2 text-xs sm:text-sm font-bold rounded-lg transition-all cursor-pointer ${
                 mode === 'login' 
                   ? 'bg-indigo-600 text-white shadow-md' 
                   : 'text-slate-400 hover:text-slate-200'
@@ -175,7 +175,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             </button>
             <button
               onClick={() => { setMode('register'); resetMessages(); }}
-              className={`py-2.5 text-sm sm:text-base font-extrabold rounded-xl transition-all cursor-pointer ${
+              className={`py-2 text-xs sm:text-sm font-bold rounded-lg transition-all cursor-pointer ${
                 mode === 'register' 
                   ? 'bg-indigo-600 text-white shadow-md' 
                   : 'text-slate-400 hover:text-slate-200'
@@ -187,7 +187,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 sm:p-8 max-h-[calc(100vh-200px)] overflow-y-auto custom-scrollbar">
+        <div className="p-5 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
           
           {/* Error Banner */}
           {errorMessage && (
