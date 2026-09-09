@@ -1,0 +1,6 @@
+{
+  "name": "Aprende a Programar: Cursos de Cero a Experto",
+  "description": "Plataforma interactiva de aprendizaje de programación en C++, Python, JavaScript, Java, Node.js, Rust, SQL, HTML y CSS con compilador integrado, lecciones progresivas y certificación en PDF.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
