@@ -24,6 +24,7 @@ import {
 } from '../services/paymentGateways';
 import { recordNewPurchase } from '../services/transactionService';
 import { getActiveUserSession } from '../services/authService';
+import { supabaseService } from '../services/supabaseService';
 
 export interface PlanDetails {
   id: string;
@@ -103,6 +104,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           method: selectedGateway,
           courseId: courseId || null,
           cardLast4: selectedGateway === 'stripe' ? (cardNumber.replace(/\s+/g, '').slice(-4) || '4242') : undefined
+        });
+
+        // Registrar en Supabase
+        supabaseService.recordTransaction(recorded, session?.id).catch(err => {
+          console.warn('Error syncing purchase to Supabase:', err);
         });
 
         setCompletedTxId(result.transactionId || recorded.id);

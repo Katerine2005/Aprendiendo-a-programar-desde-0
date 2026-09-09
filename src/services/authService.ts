@@ -1,4 +1,5 @@
 import { UserProfile, UserRole, CourseId } from '../types';
+import { supabaseService } from './supabaseService';
 
 export interface StoredUser extends UserProfile {
   passwordHash: string; // Stored securely in local state/storage
@@ -187,6 +188,11 @@ export const registerStudent = (input: RegisterInput): AuthResponse => {
 
   const updatedUsers = [...users, newStudent];
   saveUsers(updatedUsers);
+
+  // Sincronizar en segundo plano con la base de datos Supabase
+  supabaseService.syncUserToSupabase(newStudent).catch(err => {
+    console.warn('Sync Supabase error:', err);
+  });
 
   // Return clean UserProfile without passwordHash
   const { passwordHash, ...profile } = newStudent;
