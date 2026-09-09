@@ -1338,38 +1338,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   />
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3 text-sm">
-                  <div className="flex items-center space-x-2">
-                    <Filter className="w-4 h-4 text-slate-400" />
-                    <span className="text-slate-300 font-bold">Estado:</span>
-                    <select
-                      value={paymentStatusFilter}
-                      onChange={(e) => setPaymentStatusFilter(e.target.value as any)}
-                      className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white font-bold cursor-pointer text-sm"
-                    >
-                      <option value="todos">Todos</option>
-                      <option value="completado">Completado</option>
-                      <option value="procesando">Procesando</option>
-                      <option value="reembolsado">Reembolsado</option>
-                    </select>
-                  </div>
 
-                  <div className="flex items-center space-x-2">
-                    <span className="text-slate-300 font-bold">Pasarela:</span>
-                    <select
-                      value={paymentMethodFilter}
-                      onChange={(e) => setPaymentMethodFilter(e.target.value as any)}
-                      className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white font-bold cursor-pointer text-sm"
-                    >
-                      <option value="todos">Todas las Pasarelas</option>
-                      <option value="paypal">PayPal</option>
-                      <option value="stripe">Stripe</option>
-                      <option value="tarjeta">Tarjeta / Directo</option>
-                      <option value="applepay">Apple Pay</option>
-                      <option value="banca">Banca Local</option>
-                    </select>
-                  </div>
-                </div>
               </div>
 
               {/* TRANSACTIONS TABLE */}
