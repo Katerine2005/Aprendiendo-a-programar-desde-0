@@ -32,8 +32,8 @@ export interface PaymentResponse {
  * 1. CONFIGURACIÓN DE STRIPE
  * ========================================================================= */
 export const STRIPE_CONFIG = {
-  // Clave pública leída automáticamente de .env o variable de entorno
-  publishableKey: (import.meta as any).env?.VITE_STRIPE_PUBLISHABLE_KEY || '',
+  // Clave pública leída automáticamente de .env o fallback por defecto
+  publishableKey: (import.meta as any).env?.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_51UDrBPLULCBsgwq7xujSqigageCDn0VdP2IdS4cdt2vSHSK4eIsbvmHMH5e3S23vWgN5nSRG9ZwbrefwlKmD5lUg006sjND7Ka',
   // Endpoint de backend para crear Checkout Session
   createCheckoutSessionUrl: '/api/stripe/create-checkout-session',
 };
