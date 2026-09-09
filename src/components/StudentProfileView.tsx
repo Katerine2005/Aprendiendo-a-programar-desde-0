@@ -67,11 +67,12 @@ export const StudentProfileView: React.FC<StudentProfileViewProps> = ({
     const allTx = getStoredTransactions();
     const email = currentUser?.email?.toLowerCase();
     const name = currentUser?.fullName?.toLowerCase();
-    const filtered = allTx.filter(t => 
+    // Solo mostrar transacciones que pertenezcan a este usuario
+    const filtered = allTx.filter(t =>
       (email && t.studentEmail.toLowerCase() === email) ||
-      (name && t.studentName.toLowerCase().includes(name))
+      (name && t.studentName.toLowerCase() === name)
     );
-    setStudentTransactions(filtered.length > 0 ? filtered : allTx);
+    setStudentTransactions(filtered);
   };
 
   useEffect(() => {

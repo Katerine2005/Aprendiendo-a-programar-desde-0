@@ -13,103 +13,25 @@ export interface TransactionRecord {
   courseId?: CourseId | null;
 }
 
-const TRANSACTIONS_STORAGE_KEY = 'codex_transactions_v2';
+// Clave versión 3 - fuerza limpieza del localStorage con datos demo anteriores
+const TRANSACTIONS_STORAGE_KEY = 'codex_transactions_v3';
 
-export const INITIAL_TRANSACTIONS: TransactionRecord[] = [
-  {
-    id: 'TXN-90841',
-    studentName: 'Ana Lucía Torres',
-    studentEmail: 'ana.torres@estudiante.edu',
-    planName: 'CODEX Plus ($20/mes)',
-    amount: '$20.00 USD',
-    method: 'stripe',
-    cardLast4: '4242',
-    date: '09/08/2026 - 14:22',
-    status: 'completado'
-  },
-  {
-    id: 'TXN-90840',
-    studentName: 'Carlos Alberto Mendoza',
-    studentEmail: 'carlos@estudiante.edu.hn',
-    planName: 'Licencia Curso: C++ Moderno',
-    amount: '$5.00 USD',
-    method: 'paypal',
-    date: '09/08/2026 - 11:05',
-    status: 'completado',
-    courseId: 'cpp'
-  },
-  {
-    id: 'TXN-90839',
-    studentName: 'Sofía Isabel Ramos',
-    studentEmail: 'sofia.ramos@estudiante.edu',
-    planName: 'Licencia Curso: HTML & CSS',
-    amount: '$5.00 USD',
-    method: 'paddle',
-    date: '08/08/2026 - 19:40',
-    status: 'completado',
-    courseId: 'html-css'
-  },
-  {
-    id: 'TXN-90838',
-    studentName: 'Mateo Alejandro Ruiz',
-    studentEmail: 'mateo.ruiz@estudiante.edu',
-    planName: 'Licencia Curso: Python & Algoritmos',
-    amount: '$5.00 USD',
-    method: 'stripe',
-    cardLast4: '8821',
-    date: '08/08/2026 - 16:15',
-    status: 'completado',
-    courseId: 'python'
-  },
-  {
-    id: 'TXN-90837',
-    studentName: 'Elena María Gomez',
-    studentEmail: 'elena.gomez@estudiante.edu',
-    planName: 'Pack Maestro CODEX (8 Cursos)',
-    amount: '$49.99 USD',
-    method: 'banca',
-    date: '08/08/2026 - 09:30',
-    status: 'completado'
-  },
-  {
-    id: 'TXN-90836',
-    studentName: 'Gabriel José Hernández',
-    studentEmail: 'gabriel.h@estudiante.edu',
-    planName: 'Licencia Curso: JavaScript Moderno',
-    amount: '$5.00 USD',
-    method: 'paypal',
-    date: '07/08/2026 - 22:10',
-    status: 'completado',
-    courseId: 'javascript'
-  },
-  {
-    id: 'TXN-90835',
-    studentName: 'Lucía Fernández',
-    studentEmail: 'lucia.f@estudiante.edu',
-    planName: 'Licencia Curso: Node.js Backend',
-    amount: '$5.00 USD',
-    method: 'stripe',
-    cardLast4: '3310',
-    date: '07/08/2026 - 15:02',
-    status: 'completado',
-    courseId: 'nodejs'
-  }
-];
+// Sin datos demo: el historial inicia vacío y solo crece con compras reales
+export const INITIAL_TRANSACTIONS: TransactionRecord[] = [];
 
 export const getStoredTransactions = (): TransactionRecord[] => {
   try {
     const raw = localStorage.getItem(TRANSACTIONS_STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
+      if (Array.isArray(parsed)) {
         return parsed;
       }
     }
   } catch (e) {
     console.error('Error reading transactions from localStorage:', e);
   }
-  localStorage.setItem(TRANSACTIONS_STORAGE_KEY, JSON.stringify(INITIAL_TRANSACTIONS));
-  return INITIAL_TRANSACTIONS;
+  return [];
 };
 
 export const saveTransactions = (transactions: TransactionRecord[]): void => {
