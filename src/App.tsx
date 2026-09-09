@@ -11,7 +11,6 @@ import { AdminDashboard } from './components/AdminDashboard';
 import { StudentProfileView, ProfileTab } from './components/StudentProfileView';
 import { getActiveUserSession, setActiveUserSession, isCoursePurchased, unlockCourseForStudent } from './services/authService';
 
-const LOCAL_STORAGE_KEY = 'codex_app_user_progress';
 
 const initialProgress: UserProgress = {
   studentName: 'Estudiante CODEX',
@@ -46,16 +45,7 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<'login' | 'register'>('login');
 
-  // Load progress from localStorage if available
-  const [progress, setProgress] = useState<UserProgress>(() => {
-    try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved) return JSON.parse(saved);
-    } catch (e) {
-      console.error('Error loading progress:', e);
-    }
-    return initialProgress;
-  });
+  const [progress, setProgress] = useState<UserProgress>(initialProgress);
 
   const [activeCourseId, setActiveCourseId] = useState<CourseId | null>(null);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
@@ -64,24 +54,38 @@ export default function App() {
   const [profileInitialTab, setProfileInitialTab] = useState<ProfileTab>('perfil');
   const [profileHighlightCourseId, setProfileHighlightCourseId] = useState<CourseId | null>(null);
 
-  // Sync progress student name with active user profile
+  // Load progress when user changes
   useEffect(() => {
-    if (currentUser?.fullName) {
-      setProgress(prev => ({
-        ...prev,
-        studentName: currentUser.fullName
-      }));
+    const key = currentUser ? `codex_app_user_progress_${currentUser.id}` : 'codex_app_user_progress_anonymous';
+    try {
+      const saved = localStorage.getItem(key);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (currentUser?.fullName) {
+          parsed.studentName = currentUser.fullName;
+        }
+        setProgress(parsed);
+      } else {
+        setProgress({
+          ...initialProgress,
+          studentName: currentUser?.fullName || 'Estudiante CODEX'
+        });
+      }
+    } catch (e) {
+      console.error('Error loading progress:', e);
+      setProgress(initialProgress);
     }
-  }, [currentUser]);
+  }, [currentUser?.id]); // Solo reaccionar cuando cambia el ID del usuario
 
   // Sync progress to localStorage
   useEffect(() => {
+    const key = currentUser ? `codex_app_user_progress_${currentUser.id}` : 'codex_app_user_progress_anonymous';
     try {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(progress));
+      localStorage.setItem(key, JSON.stringify(progress));
     } catch (e) {
       console.error('Error saving progress:', e);
     }
-  }, [progress]);
+  }, [progress, currentUser?.id]);
 
   // Handle dark mode class on <html>
   useEffect(() => {
