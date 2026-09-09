@@ -21,7 +21,8 @@ import {
   processPayPalPayment, 
   processPaddlePayment,
   PaymentPayload,
-  PAYPAL_CONFIG
+  PAYPAL_CONFIG,
+  STRIPE_CONFIG
 } from '../services/paymentGateways';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { recordNewPurchase } from '../services/transactionService';
@@ -506,7 +507,15 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <div className="p-3 bg-slate-950 rounded-xl border border-slate-800/80 flex items-center space-x-2 text-[11px] text-slate-400">
                       <Code2 className="w-4 h-4 text-[#635BFF] shrink-0" />
                       <span>
-                        Conector preparado: Configura tu <strong>Publishable Key de Stripe</strong> en <code className="text-indigo-300">src/services/paymentGateways.ts</code>.
+                        {STRIPE_CONFIG.publishableKey && STRIPE_CONFIG.publishableKey !== 'pk_test_tu_clave_publica_stripe_aqui' ? (
+                          <span className="text-emerald-400 font-semibold">
+                            ✅ Stripe Engine activo en vivo ({STRIPE_CONFIG.publishableKey.slice(0, 16)}...)
+                          </span>
+                        ) : (
+                          <span>
+                            Conector preparado: Configura tu <strong>Publishable Key de Stripe</strong> en <code className="text-indigo-300">src/services/paymentGateways.ts</code>.
+                          </span>
+                        )}
                       </span>
                     </div>
                   </form>
