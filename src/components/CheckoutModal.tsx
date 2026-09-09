@@ -20,8 +20,10 @@ import {
   processStripePayment, 
   processPayPalPayment, 
   processPaddlePayment,
-  PaymentPayload 
+  PaymentPayload,
+  PAYPAL_CONFIG
 } from '../services/paymentGateways';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { recordNewPurchase } from '../services/transactionService';
 import { getActiveUserSession } from '../services/authService';
 import { supabaseService } from '../services/supabaseService';
@@ -308,20 +310,74 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     </div>
 
                     {/* DEDICATED PAYPAL BUTTON */}
-                    <button
-                      type="button"
-                      onClick={() => handleExecutePayment()}
-                      disabled={isProcessing}
-                      className="w-full py-3.5 px-6 rounded-2xl bg-[#FFC439] hover:bg-[#ffbe25] text-[#003087] font-black text-sm sm:text-base transition-all cursor-pointer shadow-lg shadow-amber-400/20 flex items-center justify-center space-x-2.5 disabled:opacity-50"
-                    >
-                      <span className="font-extrabold text-base italic">PayPal</span>
-                      <span>• Pagar {selectedPlan.price}</span>
-                    </button>
+                    {PAYPAL_CONFIG.clientId && PAYPAL_CONFIG.clientId !== 'tu_paypal_client_id_aqui' ? (
+                      <div className="pt-2">
+                        <PayPalScriptProvider options={{ clientId: PAYPAL_CONFIG.clientId, currency: PAYPAL_CONFIG.currency || 'USD' }}>
+                          <PayPalButtons
+                            style={{ layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay' }}
+                            createOrder={(data, actions) => {
+                              return actions.order.create({
+                                intent: 'CAPTURE',
+                                purchase_units: [
+                                  {
+                                    description: selectedPlan.name,
+                                    amount: {
+                                      currency_code: PAYPAL_CONFIG.currency || 'USD',
+                                      value: numericAmount.toFixed(2),
+                                    },
+                                  },
+                                ],
+                              });
+                            }}
+                            onApprove={async (data, actions) => {
+                              if (actions.order) {
+                                const details = await actions.order.capture();
+                                const session = getActiveUserSession();
+                                const recorded = recordNewPurchase({
+                                  studentName: session?.fullName || 'Estudiante CODEX',
+                                  studentEmail: customerEmail.trim() || session?.email || 'estudiante@codex.edu.hn',
+                                  planName: selectedPlan.name,
+                                  amount: selectedPlan.price,
+                                  method: 'paypal',
+                                  courseId: courseId || null,
+                                });
+                                supabaseService.recordTransaction(recorded, session?.id).catch(err => {
+                                  console.warn('Error syncing purchase to Supabase:', err);
+                                });
+                                setCompletedTxId(details.id || recorded.id);
+                                setCompletedGateway('paypal');
+                                setIsSuccess(true);
+                                if (courseId && onCourseUnlocked) onCourseUnlocked(courseId);
+                                if (onSuccessPay) onSuccessPay(selectedPlan.name);
+                              }
+                            }}
+                          />
+                        </PayPalScriptProvider>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleExecutePayment()}
+                        disabled={isProcessing}
+                        className="w-full py-3.5 px-6 rounded-2xl bg-[#FFC439] hover:bg-[#ffbe25] text-[#003087] font-black text-sm sm:text-base transition-all cursor-pointer shadow-lg shadow-amber-400/20 flex items-center justify-center space-x-2.5 disabled:opacity-50"
+                      >
+                        <span className="font-extrabold text-base italic">PayPal</span>
+                        <span>• Pagar {selectedPlan.price} (Modo Prueba)</span>
+                      </button>
+                    )}
 
                     <div className="p-3 bg-slate-950 rounded-xl border border-slate-800/80 flex items-center space-x-2 text-[11px] text-slate-400">
                       <Code2 className="w-4 h-4 text-sky-400 shrink-0" />
                       <span>
-                        Conector preparado: Configura tu <strong>Client ID de PayPal</strong> en <code className="text-sky-300">src/services/paymentGateways.ts</code>.
+                        {PAYPAL_CONFIG.clientId && PAYPAL_CONFIG.clientId !== 'tu_paypal_client_id_aqui' ? (
+                          <span className="text-emerald-400 font-semibold">
+                            ✅ PayPal SDK activo en vivo ({PAYPAL_CONFIG.clientId.slice(0, 10)}...)
+                          </span>
+                        ) : (
+                          <span>
+                            Conector listo: Añade <code className="text-sky-300">VITE_PAYPAL_CLIENT_ID</code> en tu <code className="text-sky-300">.env</code> o Vercel para activar los botones en vivo.
+                          </span>
+                        )}
                       </span>
                     </div>
                   </div>
