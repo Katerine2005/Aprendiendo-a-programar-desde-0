@@ -250,64 +250,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
               <button
                 type="submit"
-                className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-3.5 px-5 rounded-xl shadow-lg text-sm sm:text-base transition-all flex items-center justify-center space-x-2.5 cursor-pointer mt-6"
+                className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-3 px-5 rounded-xl shadow-lg text-sm transition-all flex items-center justify-center space-x-2 cursor-pointer mt-4"
               >
                 <span>Ingresar al Sistema</span>
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4" />
               </button>
-
-              {/* Quick Demo Accounts Helper */}
-              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-semibold">
-                  <span className="flex items-center space-x-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-indigo-500" />
-                    <span>Cuentas de Acceso Rápido:</span>
-                  </span>
-                  <span className="text-[10px] text-slate-400">Clic para autocompletar</span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setLoginIdentifier('admin');
-                      setLoginPassword('Admin123!');
-                    }}
-                    className="p-2.5 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 rounded-xl text-left transition-all cursor-pointer group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-black text-indigo-400 group-hover:text-indigo-300">
-                        🛡️ Administrador
-                      </span>
-                      <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">
-                        Admin
-                      </span>
-                    </div>
-                    <p className="text-[11px] font-mono text-slate-300 mt-1">Usuario: <strong>admin</strong></p>
-                    <p className="text-[10px] font-mono text-slate-400">Clave: <strong>Admin123!</strong></p>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setLoginIdentifier('carlos_student');
-                      setLoginPassword('Student123!');
-                    }}
-                    className="p-2.5 bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-xl text-left transition-all cursor-pointer group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-black text-slate-300 group-hover:text-white">
-                        🎓 Estudiante
-                      </span>
-                      <span className="text-[10px] font-bold text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded">
-                        Alumno
-                      </span>
-                    </div>
-                    <p className="text-[11px] font-mono text-slate-300 mt-1">Usuario: <strong>carlos_student</strong></p>
-                    <p className="text-[10px] font-mono text-slate-400">Clave: <strong>Student123!</strong></p>
-                  </button>
-                </div>
-              </div>
             </form>
           )}
 
